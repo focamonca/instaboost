@@ -46,3 +46,15 @@ It's copy from https://github.com/instabot-py
 | unfollow(id) | Unfollow the user with the given ID. |
 | logout() | Log out of Instagram. |
 
+Usage
+
+python instaboost.py
+
+or instaboot.exe
+
+sorry, some strings are in portuguese, i'll change it next commit
+
+![Parameters!](https://github.com/andrewsegas/docs/blob/master/im2.png "Parameters")
+
+
+![running!](https://github.com/andrewsegas/docs/blob/master/img3.png "running")
