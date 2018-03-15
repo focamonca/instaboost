@@ -56,6 +56,7 @@ python example.py
 2 - User Interface
 ```py
 pip3 install pyqt5
+pip install -r requirements.txt
 python instaboost.py
 ```
 
