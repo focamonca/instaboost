@@ -117,13 +117,13 @@ class Ui_Echo(object):
     def retranslateUi(self, Echo):
         _translate = QtCore.QCoreApplication.translate
         Echo.setWindowTitle(_translate("Echo", "Instaboost"))
-        self.label.setText(_translate("Echo", "Login Instagram:"))
-        self.label_2.setText(_translate("Echo", "Senha Instagram:"))
+        self.label.setText(_translate("Echo", "Login instagram:"))
+        self.label_2.setText(_translate("Echo", "Pass Instagram:"))
         self.label_3.setText(_translate("Echo", "Likes"))
-        self.label_4.setText(_translate("Echo", "Comentarios:"))
+        self.label_4.setText(_translate("Echo", "Comments:"))
         self.label_5.setText(_translate("Echo", "Follows:"))
         self.label_6.setText(_translate("Echo", "Unfollows:"))
-        self.label_7.setText(_translate("Echo", "Quantidade por dia de:"))
+        self.label_7.setText(_translate("Echo", "Per day:"))
         self.label_8.setText(_translate("Echo", "Tags"))
         self.label_9.setText(_translate("Echo", "Tags:"))
         self.label_10.setText(_translate("Echo", ""))
@@ -131,16 +131,16 @@ class Ui_Echo(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">#like4like #follow4follow #f4f #instaboost #animal #gopro</span></p></body></html>"))
-        self.startButton.setText(_translate("Echo", "Começar"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">#like4like #follow4follow #f4f #instaboost #animal #gopro #l:212901056 </span></p></body></html>"))
+        self.startButton.setText(_translate("Echo", "Start"))
         self.lineEdit_3.setText(_translate("Echo", "1500"))
         #self.lineEdit_4.setText(_translate("Echo", "0"))
         self.lineEdit_5.setText(_translate("Echo", "1500"))
         self.lineEdit_6.setText(_translate("Echo", "200"))
         self.lineEdit_4.setPlaceholderText(_translate("Echo", "Em manutenção"))
-        self.lineEdit.setPlaceholderText(_translate("Echo", "Usuario do Instagram"))
-        self.lineEdit_2.setPlaceholderText(_translate("Echo", "Senha do Instagram"))
-        self.label_11.setText(_translate("Echo", "Parametros Instaboost"))
+        self.lineEdit.setPlaceholderText(_translate("Echo", "Instagram User"))
+        self.lineEdit_2.setPlaceholderText(_translate("Echo", "instagram Password"))
+        self.label_11.setText(_translate("Echo", "Parameters Instaboost"))
 
 
 

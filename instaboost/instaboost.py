@@ -25,13 +25,13 @@ class MainWindow(QMainWindow, login_ui.Ui_Echo):
         self.s = requests.Session()
         r = self.s.get('http://ec2-18-218-101-210.us-east-2.compute.amazonaws.com:8080/')
 
-        if r.text.find("batata") and self.usuario == "usuariobeta" and self.senha == "usuariobeta":
-            uiParam.setupUi(ParamQW)
-            uiParam.startButton.clicked.connect(self.startMain)
-            ParamQW.show()
-            LoginQW.hide()
-        else:
-            QMessageBox.critical(self, "Login", "Usuario ou senha incorretos!!", QMessageBox.Ok)
+        #if r.text.find("batata") and self.usuario == "usuariobeta" and self.senha == "usuariobeta":
+        uiParam.setupUi(ParamQW)
+        uiParam.startButton.clicked.connect(self.startMain)
+        ParamQW.show()
+        LoginQW.hide()
+        #else:
+         #   QMessageBox.critical(self, "Login", "Wrong User or password", QMessageBox.Ok)
 
     def startMain(self):
         uiParam.label_10.setText("Verificando...")
@@ -47,7 +47,7 @@ class MainWindow(QMainWindow, login_ui.Ui_Echo):
             MainQW.show()
             ParamQW.hide()
         else:
-            QMessageBox.critical(self, "Login", "Usuario ou senha do Instagram incorretos!!", QMessageBox.Ok)
+            QMessageBox.critical(self, "Login", "Wrong User or password!!", QMessageBox.Ok)
             uiParam.label_10.setText("")
 
     def sair(self):

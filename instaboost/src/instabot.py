@@ -565,12 +565,12 @@ class InstaBot:
 
                             if self.by_location:
                                 ncodtag = self.media_by_tag[i]['id']
-                                log_string = "Tentando curtir: %s" % \
+                                log_string = "Trying to like: %s" % \
                                              (self.media_by_tag[i]['id'])
                                 like = self.like(self.media_by_tag[i]['id'])
                             else:
                                 ncodtag = self.media_by_tag[i]['node']['id']
-                                log_string = "Tentando curtir: %s" % \
+                                log_string = "Trying to like: %s" % \
                                              (self.media_by_tag[i]['node']['id'])
                                 like = self.like(self.media_by_tag[i]['node']['id'])
 
@@ -583,7 +583,7 @@ class InstaBot:
                                     # Like, all ok!
                                     self.error_400 = 0
                                     self.like_counter += 1
-                                    log_string = "Curtido: %s. Like #%i." % \
+                                    log_string = "Liked: %s. Like #%i." % \
                                                  (ncodtag,
                                                   self.like_counter)
                                     insert_media(self,
@@ -591,7 +591,7 @@ class InstaBot:
                                                  status="200")
                                     self.write_log(log_string,True,1)
                                 elif like.status_code == 400:
-                                    log_string = "Não curtido: %i" \
+                                    log_string = "Not liked: %i" \
                                                  % (like.status_code)
                                     self.write_log(log_string)
                                     insert_media(self,
@@ -604,7 +604,7 @@ class InstaBot:
                                     else:
                                         self.error_400 += 1
                                 else:
-                                    log_string = "Não Curtido: %i" \
+                                    log_string = "Not liked: %i" \
                                                  % (like.status_code)
                                     insert_media(self,
                                                  media_id=ncodtag,
@@ -660,7 +660,7 @@ class InstaBot:
                 comment = self.s.post(url_comment, data=comment_post)
                 if comment.status_code == 200:
                     self.comments_counter += 1
-                    log_string = 'Comentando: "%s". #%i.' % (comment_text,
+                    log_string = 'Commented: "%s". #%i.' % (comment_text,
                                                         self.comments_counter)
                     self.write_log(log_string,True,3)
                 return comment
@@ -676,7 +676,7 @@ class InstaBot:
                 follow = self.s.post(url_follow)
                 if follow.status_code == 200:
                     self.follow_counter += 1
-                    log_string = "Seguindo: %s #%i." % (user_id,
+                    log_string = "Following: %s #%i." % (user_id,
                                                         self.follow_counter)
                     self.write_log(log_string,True,2)
                     username = self.get_username_by_user_id(user_id=user_id)
@@ -821,7 +821,7 @@ class InstaBot:
                 self.next_iteration["Follow"] = time.time() + \
                                                 self.add_time(self.follow_delay/2)
                 return
-            log_string = "Tentando Seguir: %s" % (
+            log_string = "Trying to follow: %s" % (
                 ccodeuserid)
             self.write_log(log_string)
 
@@ -924,7 +924,7 @@ class InstaBot:
                 checking = False
 
         if self.login_status:
-            log_string = "Sobre o Usuario : %s" % current_user
+            log_string = "Account: %s" % current_user
             self.write_log(log_string,False,8)#inicia a salvar o log para ui
             if self.login_status == 1:
                 url_tag = self.url_user_detail % (current_user)
@@ -932,17 +932,16 @@ class InstaBot:
                     r = self.s.get(url_tag)
                     all_data = json.loads(r.text)
 
-                    user_info = all_data['user']
+                    user_info = all_data['graphql']['user']
                     i = 0
                     log_string = "Checking user info.."
                     self.write_log(log_string)
 
-                    follows = user_info['follows']['count']
-                    follower = user_info['followed_by']['count']
-                    media = user_info['media']['count']
+                    follows = user_info['edge_follow']['count']
+                    follower = user_info['edge_followed_by']['count']
+                    media = user_info['edge_owner_to_timeline_media']['count']
                     follow_viewer = user_info['follows_viewer']
-                    followed_by_viewer = user_info[
-                        'followed_by_viewer']
+                    followed_by_viewer = user_info['followed_by_viewer']
                     requested_by_viewer = user_info[
                         'requested_by_viewer']
                     has_requested_viewer = user_info[
@@ -956,46 +955,46 @@ class InstaBot:
                     if follows == 0 or follower / follows > 3:
                         self.is_selebgram = True
                         self.is_fake_account = False
-                        print('   >>>This is probably Selebgram account')
-                        self.write_log("   >>>Provavelmente conta de Famoso",False,9)
+                        #print('   >>>This is probably Selebgram account')
+                        self.write_log("   >>>This is probably Selebgram account",False,9)
                     elif follower == 0 or follows / follower > 2:
                         self.is_fake_account = True
                         self.is_selebgram = False
-                        print('   >>>This is probably Fake account')
-                        self.write_log("   >>>Provavelmente conta Fake", False,9)
+                        #print('   >>>This is probably Fake account')
+                        self.write_log("   >>>This is probably Fake account", False,9)
                     else:
                         self.is_selebgram = False
                         self.is_fake_account = False
-                        print('   >>>This is a normal account')
-                        self.write_log("   >>>Conta normal", False,9)
+                        #print('   >>>This is a normal account')
+                        self.write_log("   >>>This is a normal account", False,9)
 
                     if media > 0 and follows / media < 25 and follower / media < 25:
                         self.is_active_user = True
-                        print('   >>>This user is active')
-                        self.write_log("   >>>Usuario Ativo", False,9)
+                        #print('   >>>This user is active')
+                        self.write_log("   >>>This user is active", False,9)
                     else:
                         self.is_active_user = False
-                        print('   >>>This user is passive')
-                        self.write_log("   >>>Usuario Passivo", False,9)
+                        #print('   >>>This user is passive')
+                        self.write_log("   >>>This user is passive", False,9)
 
                     if follow_viewer or has_requested_viewer:
                         self.is_follower = True
-                        print("   >>>This account is following you")
-                        self.write_log("   >>>Usuario esta seguindo você", False,9)
+                        #print("   >>>This account is following you")
+                        self.write_log("   >>>This account is following you", False,9)
                     else:
                         self.is_follower = False
-                        print('   >>>This account is NOT following you')
-                        self.write_log("   >>>Usuario NÃO esta seguindo você", False,9)
+                        #print('   >>>This account is NOT following you')
+                        self.write_log("   >>>This account is NOT following you", False,9)
 
                     if followed_by_viewer or requested_by_viewer:
                         self.is_following = True
-                        print('   >>>You are following this account')
-                        self.write_log("   >>>Você segue esse Usuario", False,9)
+                        #print('   >>>You are following this account')
+                        self.write_log("   >>>You are following this account", False,9)
 
                     else:
                         self.is_following = False
-                        print('   >>>You are NOT following this account')
-                        self.write_log("   >>>Você NÃO segue esse Usuario", False,9)
+                        #print('   >>>You are NOT following this account')
+                        self.write_log("   >>>You are NOT following this account", False,9)
 
                 except:
                     logging.exception("Except on auto_unfollow!")
