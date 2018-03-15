@@ -213,7 +213,7 @@ class Ui_mainTela(object):
         self.label_6.setText(_translate("mainTela", "Following"))
         self.labelSeguidores.setText(_translate("mainTela", "0"))
         self.labelSeguindo.setText(_translate("mainTela", "0"))
-        self.sairButton.setText(_translate("mainTela", "Loggout"))
+        self.sairButton.setText(_translate("mainTela", "Log out"))
         self.labelLikes.setText(_translate("mainTela", "0"))
         self.label_7.setText(_translate("mainTela", "Likes:"))
         self.labelComent.setText(_translate("mainTela", "0"))

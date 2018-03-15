@@ -84,8 +84,8 @@ class RodarThread(QThread):
             follow_per_day=int(uiParam.lineEdit_5.text()),
             follow_time=1 * 60,
             unfollow_per_day=int(uiParam.lineEdit_6.text()),
-            unfollow_break_min=10,
-            unfollow_break_max=20,
+            unfollow_break_min=15,
+            unfollow_break_max=30,
             log_mod=0,
             proxy='',
             # List of list of words, each of which will be used to generate comment
@@ -104,7 +104,8 @@ class RodarThread(QThread):
             ## Will do partial matches; i.e. 'mozart' will block 'legend_mozart'
             ### 'free_followers' will be blocked because it contains 'free'
             unwanted_username_list=[],
-            unfollow_whitelist=[])
+            unfollow_whitelist=[],
+            UI=True)
 
         if self.bot.login_status:
             self.loggedSignal.emit(True)
@@ -114,9 +115,9 @@ class RodarThread(QThread):
 
     def Rodar(self):
         ultimaMsg = ""
-
+        check_status(self.bot)
         while True:
-            check_status(self.bot)
+
             uiMain.labelNome.setText(self.bot.user_login)
             uiMain.labelSeguindo.setText(str(self.bot.self_following))
             uiMain.labelSeguidores.setText(str(self.bot.self_follower))
@@ -143,10 +144,11 @@ class RodarThread(QThread):
             self.bot.new_auto_mod_unfollow()
             ultimaMsg = self.mostraMsg(ultimaMsg)
             # ------------------- Comment -------------------
+            self.bot.new_auto_mod_comments()
+            ultimaMsg = self.mostraMsg(ultimaMsg)
 
-            # self.new_auto_mod_comments()
-            # Bot iteration in 1 sec
-            time.sleep(2)
+            # Bot iteration in 2 sec
+            time.sleep(2 * random.random())
             # print("Tic!")
     def mostraMsg(self,ultimaMsg):
 

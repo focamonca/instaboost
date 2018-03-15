@@ -20,7 +20,7 @@ from .sql_updates import insert_media, insert_username, insert_unfollow_count
 from .sql_updates import get_usernames_first, get_usernames, get_username_random
 from .sql_updates import check_and_insert_user_agent
 from fake_useragent import UserAgent
-#import instaboost
+from src.check_status import check_status
 
 class InstaBot:
     """
@@ -158,7 +158,8 @@ class InstaBot:
                  user_blacklist={},
                  tag_blacklist=[],
                  unwanted_username_list=[],
-                 unfollow_whitelist=[]):
+                 unfollow_whitelist=[],
+                 UI=False):
 
         self.database_name = database_name
         self.follows_db = sqlite3.connect(database_name, timeout=0, isolation_level=None)
@@ -235,8 +236,9 @@ class InstaBot:
         self.write_log(log_string)
         self.login()
         self.populate_user_blacklist()
-        #signal.signal(signal.SIGTERM, self.cleanup) #it must be commented, these two lines don't work with UI
-        #atexit.register(self.cleanup)                  #Its just to clean everything if user press CTRL+C
+        if UI == False:
+            signal.signal(signal.SIGTERM, self.cleanup) #it must be commented, these two lines don't work with UI
+            atexit.register(self.cleanup)                  #Its just to clean everything if user press CTRL+C
 
     def populate_user_blacklist(self):
         for user in self.user_blacklist:
@@ -252,7 +254,7 @@ class InstaBot:
                                'invalid' % (user))
             else:
                 # prevent exception if user have no media
-                id_user = all_data['user']['id']
+                id_user = all_data['graphql']['user']['id']
                 # Update the user_name with the user_id
                 self.user_blacklist[user] = id_user
                 log_string = "Blacklisted user %s added with ID: %s" % (user,
@@ -446,9 +448,9 @@ class InstaBot:
                 try:
                     r = self.s.get(url_info)
                     all_data = json.loads(r.text)
-                    user_info = all_data['user']
-                    follows = user_info['follows']['count']
-                    follower = user_info['followed_by']['count']
+                    user_info = all_data['graphql']['user']
+                    follows = user_info['edge_follow']['count']
+                    follower = user_info['edge_followed_by']['count']
                     follow_viewer = user_info['follows_viewer']
                     if follower > 3000 or follows > 1500:
                         self.write_log('   >>>This is probably Selebgram, Business or Fake account')
@@ -765,7 +767,7 @@ class InstaBot:
                 # ------------------- Unfollow -------------------
                 self.new_auto_mod_unfollow()
                 # ------------------- Comment -------------------
-                #self.new_auto_mod_comments()
+                self.new_auto_mod_comments()
                 # Bot iteration in 1 sec
                 time.sleep(3)
                 # print("Tic!")
@@ -795,6 +797,7 @@ class InstaBot:
             # You have media_id to like:
             if self.like_all_exist_media(media_size=1, delay=False):
                 # If like go to sleep:
+                check_status(self)
                 self.next_iteration["Like"] = time.time() + \
                                               self.add_time(self.like_delay)
                 # Count this tag likes:
@@ -893,7 +896,10 @@ class InstaBot:
                     return True
             return False
         else:
-            insert_media(self, self.media_by_tag[0]['node']['id'], str(check_comment.status_code))
+            if self.by_location:
+                insert_media(self, self.media_by_tag[0]['id'], str(check_comment.status_code))
+            else:
+                insert_media(self, self.media_by_tag[0]['node']['id'], str(check_comment.status_code))
             self.media_by_tag.remove(self.media_by_tag[0])
             return False
 

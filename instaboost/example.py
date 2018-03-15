@@ -9,19 +9,22 @@ from src.check_status import check_status
 from src.feed_scanner import feed_scanner
 from src.follow_protocol import follow_protocol
 from src.unfollow_protocol import unfollow_protocol
+#from src import ihm
+
+
 
 
 
 bot = InstaBot(
-    login="yourlogin",
+    login="YourLogin",
     password="yourpassword",
     like_per_day=1700,
-    comments_per_day=0,
+    comments_per_day=200,
     tag_list=['like4like', 'l:213336744', 'l:212901056','follow4follow'], #l: for location, check example in readme.md
     tag_blacklist=['compras', 'promocao'],
     user_blacklist={},
     max_like_for_one_tag=39,
-    follow_per_day=400,
+    follow_per_day=0,
     follow_time=1 * 60,
     unfollow_per_day=400,
     unfollow_break_min=15,
@@ -52,7 +55,8 @@ bot = InstaBot(
         'beauty', 'express', 'kredit', 'collection', 'impor', 'preloved',
         'follow', 'follower', 'gain', '.id', '_id', 'bags'
     ],
-    unfollow_whitelist=[''])
+    unfollow_whitelist=[''],
+    UI = False)
 
 
 
@@ -74,9 +78,14 @@ while True:
 
     mode = 0
 
+    #print("You choose mode : %i" %(mode))
+    #print("CTRL + C to cancel this operation or wait 30 seconds to start")
+    #time.sleep(30)
+    if  bot.login_status == False:
+        break
+
     if mode == 0:
         bot.new_auto_mod()
-
     elif mode == 1:
         check_status(bot)
         while bot.self_following - bot.self_follower > 200:
@@ -108,6 +117,5 @@ while True:
     elif mode == 5:
         bot.bot_mode = 2
         unfollow_protocol(bot)
-		
     else:
         print("Wrong mode!")
