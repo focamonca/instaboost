@@ -1,4 +1,4 @@
-based on from https://github.com/instabot-py 
+based on https://github.com/instabot-py 
 	
 	+ user interface
 	+ .EXE file for non developers 
