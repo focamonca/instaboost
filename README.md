@@ -1,4 +1,4 @@
-It's copy from https://github.com/instabot-py 
+based on from https://github.com/instabot-py 
 	
 	+ user interface
 	+ .EXE file for non developers 
@@ -47,11 +47,24 @@ It's copy from https://github.com/instabot-py
 | unfollow(id) | Unfollow the user with the given ID. |
 | logout() | Log out of Instagram. |
 
-Usage
-
+## Usage
+1 - Prompt
+```py
+python example.py
+```
+## OR
+2 - User Interface
+```py
+pip3 install pyqt5
 python instaboost.py
+```
 
-or instaboot.exe
+## OR easier>
+3 - User Interface
+
+EXE FILES\instaboot.exe
+
+If your antivirus complain and you don't trust you may use the first example
 
 ![Parameters!](https://github.com/andrewsegas/docs/blob/master/im2.png "Parameters")
 
