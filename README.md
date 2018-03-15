@@ -50,6 +50,7 @@ based on from https://github.com/instabot-py
 ## Usage
 1 - Prompt
 ```py
+pip install -r requirements.txt
 python example.py
 ```
 ## OR
