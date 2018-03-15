@@ -1,4 +1,4 @@
-based on from https://github.com/instabot-py 
+based on https://github.com/instabot-py 
 	
 	+ user interface
 	+ .EXE file for non developers 
@@ -50,12 +50,14 @@ based on from https://github.com/instabot-py
 ## Usage
 1 - Prompt
 ```py
+pip install -r requirements.txt
 python example.py
 ```
 ## OR
 2 - User Interface
 ```py
 pip3 install pyqt5
+pip install -r requirements.txt
 python instaboost.py
 ```
 
