@@ -1,12 +1,14 @@
-based on https://github.com/instabot-py 
-	
-	+ user interface
-	+ .EXE file for non developers 
-	+ location tags 
+[![Donate](https://img.shields.io/badge/PayPal-Donate-brightgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=andrewsegas%40gmail%2ecom&lc=BR&item_name=instaboost&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
+# New Features
++ User Interface
++ .EXE file for non developers 
++ Location tags 
 	
 # InstaBoost
 
 > Toolkit for building automated Instagram bots without direct access to the Instagram API or passsing through the review process.
+
 
 ## Parameters
 | Parameter            | Type|                Description                           |        Default value             |
@@ -75,3 +77,6 @@ If your antivirus complain and you don't trust you may use the first example
 
 Finding location code!!
 ![Finding Location!](https://github.com/andrewsegas/docs/blob/master/location.png "Finding Location")
+
+
+based on https://github.com/instabot-py 
