@@ -767,6 +767,7 @@ class InstaBot:
                 # ------------------- Unfollow -------------------
                 self.new_auto_mod_unfollow()
                 # ------------------- Comment -------------------
+
                 self.new_auto_mod_comments()
                 # Bot iteration in 1 sec
                 time.sleep(3)
@@ -848,21 +849,22 @@ class InstaBot:
     def new_auto_mod_comments(self):
         nshortcode = '0'
         ncodeid = '0'
-        if self.by_location:
-            nshortcode = self.media_by_tag[0]['code']
-            ncodeid = self.media_by_tag[0]['id']
-        else:
-            nshortcode = self.media_by_tag[0]['node']['shortcode']
-            ncodeid = self.media_by_tag[0]['node']['id']
-        if time.time() > self.next_iteration["Comments"] and self.comments_per_day != 0 \
-                and len(self.media_by_tag) > 0 \
-                and self.check_exisiting_comment(nshortcode) == False:
-            comment_text = self.generate_comment()
-            log_string = "Tentando comentar: %s" % (ncodeid)
-            self.write_log(log_string)
-            if self.comment(ncodeid, comment_text) != False:
-                self.next_iteration["Comments"] = time.time() + \
-                                                  self.add_time(self.comments_delay)
+        if len(self.media_by_tag)>0:
+            if self.by_location:
+                nshortcode = self.media_by_tag[0]['code']
+                ncodeid = self.media_by_tag[0]['id']
+            else:
+                nshortcode = self.media_by_tag[0]['node']['shortcode']
+                ncodeid = self.media_by_tag[0]['node']['id']
+            if time.time() > self.next_iteration["Comments"] and self.comments_per_day != 0 \
+                    and len(self.media_by_tag) > 0 \
+                    and self.check_exisiting_comment(nshortcode) == False:
+                comment_text = self.generate_comment()
+                log_string = "Tentando comentar: %s" % (ncodeid)
+                self.write_log(log_string)
+                if self.comment(ncodeid, comment_text) != False:
+                    self.next_iteration["Comments"] = time.time() + \
+                                                      self.add_time(self.comments_delay)
 
     def add_time(self, time):
         """ Make some random for next iteration"""
