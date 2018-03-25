@@ -21,6 +21,7 @@ from .sql_updates import get_usernames_first, get_usernames, get_username_random
 from .sql_updates import check_and_insert_user_agent
 from fake_useragent import UserAgent
 from src.check_status import check_status
+from src.boostversion import boostversion
 
 class InstaBot:
     """
@@ -69,6 +70,8 @@ class InstaBot:
     error_400_to_ban = 3
     # If InstaBot think you are banned - going to sleep.
     ban_sleep_time = 2 * 60 * 60
+    boostVersion = '18'
+    boostUpdated = True
 
     # All counter.
     bot_mode = 0
@@ -263,6 +266,15 @@ class InstaBot:
                 time.sleep(5 * random.random())
 
     def login(self):
+        boostversion(self)
+        if self.boostUpdated != True:
+            self.write_log(
+                'THIS SOFTWARE MUST BE UPDATED, PLEASE, UPDATE YOUR INSTABOOST IN "https://github.com/andrewsegas/instaboost" !')
+            self.write_log(
+                'THIS SOFTWARE MUST BE UPDATED, PLEASE, UPDATE YOUR INSTABOOST IN "https://github.com/andrewsegas/instaboost" !')
+            self.write_log(
+                'THIS SOFTWARE MUST BE UPDATED, PLEASE, UPDATE YOUR INSTABOOST IN "https://github.com/andrewsegas/instaboost" !')
+
         log_string = 'Trying to login as %s...\n' % (self.user_login)
         self.write_log(log_string)
         self.login_post = {
@@ -1051,9 +1063,9 @@ class InstaBot:
         """ Write log by print() or logger """
         if nTipo == 9: #acumulador de log
             self.guardaLog = self.guardaLog + "\n" + log_text
-        elif nTipo == 8:
+        elif nTipo == 8: #first log_text
             self.guardaLog = log_text
-        elif nTipo == 4:
+        elif nTipo == 4: #show everything
             log_text = log_text +"\n"+self.guardaLog
 
             #Quando for 4 atualiza o LOG_TEXT para enviar o bloco de texto

@@ -9,6 +9,7 @@ import login_ui
 import random
 import time
 from src import InstaBot
+from src import boostversion
 from src.check_status import check_status
 
 class MainWindow(QMainWindow, login_ui.Ui_Echo):
@@ -22,8 +23,6 @@ class MainWindow(QMainWindow, login_ui.Ui_Echo):
     def login(self):
         self.usuario = uiLogin.loginEdit.text()
         self.senha = uiLogin.senhaEdit.text()
-        self.s = requests.Session()
-        r = self.s.get('http://ec2-18-218-101-210.us-east-2.compute.amazonaws.com:8080/')
 
         #if r.text.find("batata") and self.usuario == "usuariobeta" and self.senha == "usuariobeta":
         uiParam.setupUi(ParamQW)
@@ -80,7 +79,7 @@ class RodarThread(QThread):
             tag_list=uiParam.textEdit.toPlainText().strip()[1:].replace(" ","").split("#"),
             tag_blacklist=['compras', 'promocao'],
             user_blacklist={},
-            max_like_for_one_tag=39,
+            max_like_for_one_tag=6,
             follow_per_day=int(uiParam.lineEdit_5.text()),
             follow_time=1 * 60,
             unfollow_per_day=int(uiParam.lineEdit_6.text()),
@@ -116,6 +115,10 @@ class RodarThread(QThread):
     def Rodar(self):
         ultimaMsg = ""
         check_status(self.bot)
+        if self.bot.boostUpdated != True:
+            self.bot.mandamsg = '< \n<< \n<<< \n THIS SOFTWARE MUST BE UPDATED,\n PLEASE, UPDATE YOUR INSTABOOST IN \n "https://github.com/andrewsegas/instaboost" !\n>>> \n>> \n>'
+            ultimaMsg = self.mostraMsg(ultimaMsg)
+
         while True:
 
             uiMain.labelNome.setText(self.bot.user_login)
